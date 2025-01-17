@@ -4,7 +4,7 @@ services:
   api-gateway:
     build: ./api-gateway
     ports:
-      -"3000:3000"
+      - "3000:3000"
     env_file: ./api-gateway/.env
     depends_on:
       - redis
@@ -52,21 +52,21 @@ services:
       - redis
       - rabbitmq
     environment:
-      - REDIS_CLIENT = redis://redis:6379
-      - RABBITMQ_URL = amqp://rabbitmq:5672
+      - REDIS_CLIENT=redis://redis:6379
+      - RABBITMQ_URL=amqp://rabbitmq:5672
 
 
-redis :
-  image: redis-alpine
-  ports:
+  redis :
+    image: redis:alpine
+    ports:
     - "6379:6379"
 
-rabbitmq :
-  image : rabbitmq:3-management
-  ports :
-    - "15672:15672"
-  health-check:
-    test : ["CMD", "rabbitmq-diagnostics","-q","ping"]
-    interval : 30s,
-    timeout : 10s
-    retries : 5
+  rabbitmq :
+    image : rabbitmq:3-management
+    ports :
+      - "5672:5672"
+    healthcheck:
+      test : ["CMD", "rabbitmq-diagnostics","-q","ping"]
+      interval : 30s
+      timeout : 10s
+      retries : 5

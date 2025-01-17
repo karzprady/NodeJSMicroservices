@@ -12,7 +12,7 @@ const {rateLimit} = require("express-rate-limit")
 const {RedisStore} = require("rate-limit-redis")
 const { route } = require("./routes/identity-service")
 const router = require("./routes/identity-service")
-const redisClient = new redis.Redis(process.env.REDIS_URL)
+const redisClient = new redis.Redis(process.env.REDIS_CLIENT)
 //db
 
 mongoose.connect(process.env.MONGO_URI).then(()=>logger.info("db connected")).catch(e=>logger.error("mongo connection error",e))
