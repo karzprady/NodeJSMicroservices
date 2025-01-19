@@ -9,7 +9,7 @@ const ErrorHandler= require('./middleware/errorHandler')
 const {rateLimit} = require('express-rate-limit')
 const  {RedisStore} = require('rate-limit-redis')
 const redis = require('ioredis')
-const { connectToRabbitMQ, ConsumeEvent } = require('./utils/rabbitmq')
+const { connectToRabbitMQ, consumeEvent } = require('./utils/rabbitmq')
 const HandlePostdeleted = require('./EventHandlers/mediaeventhandlers')
 const redisClient = new redis.Redis(process.env.REDIS_CLIENT)
 
@@ -57,7 +57,7 @@ async function startserver() {
 
         //consume all events
 
-        await ConsumeEvent('post.deleted',HandlePostdeleted)
+        await consumeEvent('post.deleted',HandlePostdeleted)
         app.listen(process.env.PORT,()=>{
             logger.info(`media service started at PORT ${process.env.PORT}`)
         })
@@ -65,8 +65,8 @@ async function startserver() {
     }
     catch(e){
 
-        logger.info("failed to start servers",e)
-        process.exit(1)
+        logger.error("failed to start media service",e)
+        
 
     }
     

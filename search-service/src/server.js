@@ -51,8 +51,8 @@ async function StartServer(){
 
     }
     catch(e){
-        logger.error("search didnt start",e)
-        process.exit(1)
+        logger.error("search didnt start",e.stack,e.message)
+        
     }
 }
 
